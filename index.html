@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>두근두근 방과후 소식지</title>
   <style>
     body {
@@ -10,9 +11,11 @@
       margin: 0;
       padding: 40px 0;
       color: #333;
+      font-size: 18px;
     }
     .newspaper {
-      width: 900px;
+      width: 90%;
+      max-width: 900px;
       margin: auto;
       background: #fffef5;
       padding: 40px;
@@ -32,19 +35,19 @@
       margin-bottom: 40px;
     }
     .header h1 {
-      font-size: 3em;
+      font-size: 2.5em;
       margin: 0;
       color: #222;
     }
     .header p {
-      font-size: 1.2em;
+      font-size: 1.1em;
       color: #777;
     }
     .section {
       margin-bottom: 40px;
     }
     .section h2 {
-      font-size: 2em;
+      font-size: 1.8em;
       color: #333333;
       background-color: #ffefd5;
       padding: 12px;
@@ -55,15 +58,16 @@
       font-weight: bold;
     }
     .section p, .section ul {
-      font-size: 1.1em;
+      font-size: 1em;
       line-height: 1.8;
     }
     .image-frame, .grade-image-frame, .gallery {
       margin-top: 20px;
       text-align: center;
     }
-    .image-frame img, .grade-image-frame img {
-      width: 45%;
+    .image-frame img, .grade-image-frame img, .gallery img {
+      width: 100%;
+      max-width: 420px;
       margin: 10px;
       border-radius: 8px;
       border: 4px solid #ccc;
@@ -71,20 +75,8 @@
     }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-    }
-    .gallery img {
-      width: 90%;
-      border: 8px ridge #f4a460;
-      border-radius: 20px;
-      padding: 10px;
-      background-color: #fffaf0;
-      box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
-      transition: transform 0.3s;
-    }
-    .gallery img:hover {
-      transform: scale(1.05);
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
     }
     .footer {
       text-align: center;
@@ -93,10 +85,26 @@
       margin-top: 60px;
     }
   </style>
+  <script>
+    window.onload = function () {
+      const saved = localStorage.getItem("savedNewsletterContent");
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          const target = document.getElementById("dynamic-story");
+          if (target && parsed.text) {
+            target.innerHTML += `<p>${parsed.text}</p>`;
+          }
+        } catch (e) {
+          console.error("저장된 데이터를 파싱하는 중 오류 발생:", e);
+        }
+      }
+    };
+  </script>
 </head>
 <body>
   <div class="newspaper">
-    <img src="두근두근로고(배경없음).png" alt="두근두근 로고" class="logo">
+        <img src="두근두근로고(배경없음).png" alt="두근두근 로고" class="logo">
     <div class="header">
       <h1>두근두근 방과후 소식지</h1>
       <p>2025년 6월호 | 우리 아이들의 특별한 이야기</p>
@@ -442,7 +450,6 @@
     </a>
   </p>
 </div>
-
   </div>
 </body>
 </html>
